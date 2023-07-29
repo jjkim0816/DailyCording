@@ -1,29 +1,16 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.stream.IntStream;
 
 class Solution {
     public int[] solution(int[] arr) {
         int[] answer = {};
-        List<Integer> idxList = new ArrayList<Integer>();
-
-		for (int i = 0; i < arr.length; i++) {
-			if (arr[i] == 2) {
-				idxList.add(i);
-			}
-		}
         
-   		if (idxList.isEmpty()) {
-			answer = new int[1];
-			answer[0] = -1;
-			return answer;
-		}
-
-		int minIdx = Collections.min(idxList);
-		int maxIdx = Collections.max(idxList);
-
-		answer = Arrays.copyOfRange(arr, minIdx, maxIdx + 1);
+        int[] idx = IntStream.range(0, arr.length).filter(i -> arr[i] == 2).toArray();
+        
+        if (idx.length == 0)
+            return new int[] {-1};
+        
+        answer = IntStream.rangeClosed(idx[0], idx[idx.length - 1]).map(i -> arr[i]).toArray();
         
         return answer;
     }
