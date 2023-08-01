@@ -5,7 +5,6 @@ class Solution {
 		for (int i = 0; i < num; i++) {
 			answer[i] = i + 1;
 			total -= (i + 1);
-			System.out.print(total + " ");
 		}
 
 		for (int i = 0; i < num; i++) {
