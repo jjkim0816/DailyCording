@@ -13,7 +13,25 @@ class Main {
         }
         sc.close();
         
-        numberList = IntStream.of(numberList).sorted().toArray();
-        System.out.println(numberList[0] + " " + numberList[numberList.length - 1]);
+		int min = 0;
+		int max = 0;
+
+		for (int i = 0; i < numberList.length; i++) {
+			if (i == 0) {
+				min = numberList[0];
+				max = numberList[0];
+				continue;
+			}
+
+			if (min >= numberList[i]) {
+				min = numberList[i];
+			}
+
+			if (max < numberList[i]) {
+				max = numberList[i];
+			}
+		}
+
+		System.out.println(min + " " + max);
     }
 }
