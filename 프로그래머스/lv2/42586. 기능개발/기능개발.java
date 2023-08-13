@@ -11,7 +11,6 @@ class Solution {
 		for (int i = 0; i < progresses.length; i++) {
 			remainingPeriod.add((int) Math.ceil((double) (100 - progresses[i]) / speeds[i]));
 		}
-		System.out.println(remainingPeriod);
 
 		while (!remainingPeriod.isEmpty()) {
 			int current = remainingPeriod.poll();
@@ -26,6 +25,7 @@ class Solution {
 		}
 
 		answer = result.stream().mapToInt(data -> data).toArray();
+
         return answer;
     }
 }
