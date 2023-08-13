@@ -8,8 +8,9 @@ class Solution {
 		
 		for (String[] clothe : clothes) {
 			if (hm.containsKey(clothe[1])) {
-				int temp = hm.get(clothe[1]) + 1;
-				hm.put(clothe[1], temp);
+				// int temp = hm.get(clothe[1]) + 1;
+				// hm.put(clothe[1], temp);
+				hm.put(clothe[1]. hm.getOrDefault(clothe[1], 0) + 1);
 			} else {
 				hm.put(clothe[1], 1);
 			}
