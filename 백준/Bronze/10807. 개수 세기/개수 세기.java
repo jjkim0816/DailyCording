@@ -1,4 +1,4 @@
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.stream.IntStream;
 
@@ -14,7 +14,20 @@ public class Main {
 		int findNum = sc.nextInt();
 		sc.close();
 
-		System.out.println(Arrays.stream(numbers).filter(data -> data == findNum).count());
-	}
+		HashMap<Integer, Integer> hm = new HashMap<>();
+		for (int i = 0; i < numCnt; i++) {
+			Integer count = hm.get(numbers[i]);
+			if (count != null) {
+				count++;
+				hm.put(numbers[i], count);
+			} else {
+				hm.put(numbers[i], 1);
+			}
+		}
 
+		if (hm.get(findNum) == null)
+			System.out.println(0);
+		else
+			System.out.println(hm.get(findNum));
+	}
 }
