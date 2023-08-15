@@ -1,6 +1,4 @@
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 
 class Process {
@@ -15,44 +13,39 @@ class Process {
 
 class Solution {
     public int solution(int[][] jobs) {
-        LinkedList<Process> waiting = new LinkedList<>();
 
-		PriorityQueue<Process> pq = new PriorityQueue<>(new Comparator<Process>() {
-			public int compare(Process p1, Process p2) {
-				return p1.wt - p2.wt;
-			}
-		});
+        		int answer = 0;
 
-		for (int[] job : jobs) {
-			waiting.offer(new Process(job[0], job[1]));
-		}
+		// 작업이 요청되는 시점 기준으로 오름차순 정렬
+		Arrays.sort(jobs, (o1, o2) -> o1[0] - o2[0]);
 
-		Collections.sort(waiting, new Comparator<Process>() {
-			public int compare(Process p1, Process p2) {
-				return p1.rt - p2.rt;
-			}
-		});
+		// 작업의 소요시간 기준으로 오름차순 정렬
+		PriorityQueue<int[]> pq = new PriorityQueue<>((o1, o2) -> o1[1] - o2[1]);
 
-		int answer = 0;
-		int cnt = 0;
-		int time = waiting.peek().rt;
+		int jobs_index = 0; // 작업 배열 인덱스
+		int finish_job = 0; // 처리 완료된 작업 개수
+		int end_time = 0; // 작업 처리 완료 시간
 
-		while (cnt < jobs.length) {
-			while (!waiting.isEmpty() && waiting.peek().rt <= time) {
-				pq.offer(waiting.pollFirst());
+		while (true) {
+			if (finish_job == jobs.length)
+				break; // 모든 작업을 처리했다면 종료
+
+			// 이전 작업 처리 중 요청된 작업 add
+			while (jobs_index < jobs.length && jobs[jobs_index][0] <= end_time) {
+				pq.add(jobs[jobs_index++]);
 			}
 
-			if (!pq.isEmpty()) {
-				Process process = pq.poll();
-				time += process.wt;
-				answer += time - process.rt;
-				cnt++;
-			} else {
-				time++;
+			if (!pq.isEmpty()) { // 이전 작업 처리 중 요청된 작업이 있는 경우
+				int[] job = pq.poll();
+				answer += end_time - job[0] + job[1]; // 작업 요청부터 종료까지 걸린 시간 추가
+				end_time += job[1]; // 작업 처리 완료 시간 갱신
+				finish_job++; // 처리 완료된 작업 개수 1 증가
+			} else { // 이전 작업 처리 중 요청된 작업이 없는 경우
+				end_time = jobs[jobs_index][0]; // 다음 작업 요청 시점으로 갱신
 			}
 		}
 
-		answer /= cnt;
+		answer /= jobs.length;
         
         return answer;
     }
