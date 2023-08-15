@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+// https://developer-rabbit.tistory.com/entry/%EB%B0%B1%EC%A4%80-2830%EB%B2%88Java%EB%B9%84%ED%8A%B8%EC%97%B0%EC%82%B0%EC%9E%90-%ED%96%89%EC%84%B1-X3
+
 public class Main {
 
 	public static void main(String[] args) {
