@@ -17,7 +17,7 @@ public class Main {
 		for (String bracket : brackets) {
 
 			st.clear();
-			boolean isClear = true;
+			boolean checkFlag = true;
 
 			for (String br : bracket.split("")) {
 				if (br.equals("("))
@@ -26,15 +26,16 @@ public class Main {
 					if (!st.isEmpty())
 						st.pop();
 					else {
-						isClear = false;
+						checkFlag = false;
+						break;
 					}
 				}
 			}
 
-			if (st.size() != 0 || !isClear)
-				System.out.println("NO");
-			else
+			if (checkFlag && st.isEmpty())
 				System.out.println("YES");
+			else
+				System.out.println("NO");
 
 		}
 	}
