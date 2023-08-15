@@ -1,20 +1,10 @@
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-class Process {
-	int rt;
-	int wt;
-
-	public Process(int rt, int wt) {
-		this.rt = rt;
-		this.wt = wt;
-	}
-}
-
 class Solution {
     public int solution(int[][] jobs) {
 
-        		int answer = 0;
+      		int answer = 0;
 
 		// 작업이 요청되는 시점 기준으로 오름차순 정렬
 		Arrays.sort(jobs, (o1, o2) -> o1[0] - o2[0]);
