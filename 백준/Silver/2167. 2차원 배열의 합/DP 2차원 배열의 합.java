@@ -1,54 +1,48 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
+// DP를 사용하지 않고 풀기
 public class Main {
 
-	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
-		int N = scan.nextInt();			// 배열의 크기(행) 1~300
-		int M = scan.nextInt();			// 배열의 크기(열) 1~300
-		
-		// 2차원 배열 생성
-		int [][]arr = new int[N+1][M+1];
-		int [][]dp = new int[N+1][M+1];
-		
-		// i, j를 1부터 시작
-		for(int i=1; i<=N; i++)
-		{
-			for(int j=1; j<=M; j++)
-			{
-				arr[i][j] = scan.nextInt();	// 각 2차원 배열의 행, 열에 값 입력받기
-				
-				// 각각 행(i)별로 합을 구한다.
-				// dp[1][4] => dp[1][1] ~ dp[1][4]까지의 합
-				dp[i][j] = arr[i][j] + dp[i][j-1];	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		int n = Integer.parseInt(st.nextToken());
+		int m = Integer.parseInt(st.nextToken());
+
+		int[][] arr = new int[n + 1][m + 1];
+		int[][] dp = new int[n + 1][m + 1];
+
+		for (int i = 1; i <= n; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 1; j <= m; j++) {
+				arr[i][j] = Integer.parseInt(st.nextToken());
+				dp[i][j] = arr[i][j] + dp[i][j - 1];
 			}
 		}
-		
-		int K = scan.nextInt();			// 합을 구할 부분의 개수(1~10000)
-		int []sum = new int[K];			// K수만큼 합 구할 배열
-		for(int k=0; k < K; k++)
-		{
-			// arr[i][j] ~ arr[x][y] 합 구하기
-			// 각 K마다 입력받기(K가 3일경우 합3개를 구해야 함)
-			int i, j, x, y;
-			i = scan.nextInt();
-			j = scan.nextInt();
-			x = scan.nextInt();
-			y = scan.nextInt();
-			
-			// i, x => 행이므로 행을 기준으로 판별
-			for(int row = i; row <= x; row++)
-			{
-				sum[k] += dp[row][y] - dp[row][j-1];
+
+		st = new StringTokenizer(br.readLine());
+		int k = Integer.parseInt(st.nextToken());
+		int[] sum = new int[k];
+		for (int t = 0; t < k; t++) {
+			int i = 0, j = 0, x = 0, y = 0;
+			st = new StringTokenizer(br.readLine());
+			i = Integer.parseInt(st.nextToken());
+			j = Integer.parseInt(st.nextToken());
+			x = Integer.parseInt(st.nextToken());
+			y = Integer.parseInt(st.nextToken());
+
+			for (int row = i; row <= x; row++) {
+				sum[t] += dp[row][y] - dp[row][j - 1];
 			}
 		}
-		
-		// K개의 줄에 순서대로 배열의 합 출력
-		for(int i=0; i<sum.length; i++)
-		{
+
+		for (int i = 0; i < sum.length; i++) {
 			System.out.println(sum[i]);
 		}
-		scan.close();
 	}
 
 }
